@@ -1,0 +1,175 @@
+/*body styling section - start*/
+.body-color {
+    background-color: white;
+}
+
+.body-font {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+/*body styling section - end*/
+
+.signin-card-color {
+    background-color: #ffffff;
+}
+
+.signin-card{
+    margin-top: 10%;
+}
+
+.h1-text-white{
+    color: white;
+}
+
+.text-theme-blue{
+    color: #455a64;
+}
+
+.text-theme-dark{
+    color: #0d2636;
+}
+
+
+.link-text{
+    cursor: pointer; 
+}
+
+.signin-button {
+    display: block;
+    white-space: normal;
+    padding: 10px;
+    margin: 10px;
+    min-width: 300px;
+    border-radius: 3px;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration:none;
+    border: none;
+    outline: none;
+}
+
+.github-signin-button {
+    background-color: #0d2636;
+    display: block;
+    white-space: normal;
+    padding: 10px;
+    margin: 10px;
+    min-width: 300px;
+    border-radius: 3px;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration:none;
+    border: none;
+    outline: none;
+}
+
+.back-to-openpub-link{
+    margin-top: 5%;
+}
+
+.github-signin-button-text {
+    background-color: #0d2636;
+    color: white; 
+    text-transform: none;
+}
+
+.signin-button-img {
+    width: 30px;
+    height: 30px;
+    margin-left: -10px;
+    margin-right: 32px;
+    margin-bottom: 1px;
+}
+.signin-button-text {
+    background-color: white;
+    color: black !important; 
+    text-transform: none;
+}
+
+.md-toast.md-top {
+    left: 50%;
+    margin-left: -150px;
+}
+
+/*Authentication page background*/
+.authentication-page-background {
+    background: #f5f5f5;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+/*welcome heading*/
+.openpub-welcome-heading{
+    font-size: 300%;
+    color: #607D8B;
+}
+
+/*welcome text*/
+.openpub-welcome-text{
+    line-height: 200%;
+    color: #607D8B;
+}
+
+/*Authentication page texts - start*/
+.openpub-text-login{
+    font-size: 250%;
+    color: #607D8B;
+}
+
+.choose-option-text{
+    margin-bottom: 5%;
+    color: #607D8B;
+}
+/*Authentication page texts - end*/
+
+/*Home page - Start*/
+/*categores section - start*/
+.home-category-item {
+    width: 98%;
+}
+
+.home-category-image {
+    margin: 1%;
+}
+
+.home-category-text {
+    margin-left: 10%;
+}
+/*categores section - end*/
+
+/*openpub section*/
+.card-updated-date-text {
+    margin-left: 2%;
+}
+
+.card-duration-text {
+    margin-left: 1%;
+}
+
+.card-start-button {
+    margin-right: 1%;
+}
+
+/*Search bar*/
+.search-bar { background-color: #345; }
+.search-bar * { color: white !important; }
+.search-bar input { border-bottom-color: white; }
+.md-errors-spacer { display:none; }
+/*Home page - End*/
+
+.body-div {
+    height: auto;
+}
+
+.selector-toolbar {
+    color: white;
+}
+
+.main-logo-color {
+    /*color: #009688;*/
+    color: #4caf50;
+}

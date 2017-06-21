@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="openpub">
+    <head>
+        <title>openpub</title>
+        
+        <!-- App Styling -->
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,300">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amaranth:700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css'>
+        
+        <link rel="stylesheet" href="styles/style.css">
+        <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
+        
+        <!-- Angular Material requires Angular.js Libraries -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+        
+        <!-- Angular ui-router Libraries -->
+        <script src="http://unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
+        
+        <!-- Firebase Libraries -->
+        <script src="http://unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+        
+        <!-- Angular Material Library -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+        
+        <!-- App Scripts-->
+        <script src="scripts/app.js"></script>
+        
+        <!-- Components -->
+        <script src="components/auth/auth.ctr.js"></script>
+        <script src="components/auth/auth.fac.js"></script>
+        <script src="components/openpub/openpub.crt.js"></script>
+        <script src="components/openpub/openpub.fac.js"></script>
+        <script src="components/openpub/new/openpub.new.crt.js"></script>
+        
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyCv0ELrK-dnBDHNABwtbs22o8UAaAE_FC0",
+            authDomain: "openpub-41be7.firebaseapp.com",
+            databaseURL: "https://openpub-41be7.firebaseio.com",
+            projectId: "openpub-41be7",
+            storageBucket: "openpub-41be7.appspot.com",
+            messagingSenderId: "624812372332"
+          };
+          firebase.initializeApp(config);
+        </script>
+        
+    </head>
+    <body class="body-color body-font body-div">
+        <div ui-view></div>
+    </body>
+</html>
