@@ -1,4 +1,4 @@
-<div>
+<div ng-init="vm.initController()">
     <md-toolbar md-scroll-shrink class="md-primary">
         <div class="md-toolbar-tools">
             <span>
@@ -34,7 +34,12 @@
             </div>
             <div ng-if="vm.user">
                 <span>
-                    <md-button ui-sref="newopenpub">Add new pub</md-button>
+                    <md-button ui-sref="newpub">Add new pub</md-button>
+                </span>
+            </div>
+            <div ng-if="vm.user">
+                <span>
+                    <md-button ui-sref="newpublist">Add new pub list</md-button>
                 </span>
             </div>
             <div ng-if="!vm.user">

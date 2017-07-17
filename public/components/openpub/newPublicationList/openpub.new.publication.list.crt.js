@@ -4,7 +4,7 @@
     
     angular
         .module('openpub')
-        .controller('newopenpubController', function(auth, $scope, $mdSidenav, $mdDialog, $state, $mdToast, $location) {
+        .controller('newPubListController', function(auth, $scope, $mdSidenav, $mdDialog, $state, $mdToast, $location) {
         
         var vm = this;
         vm.auth = auth.ref;

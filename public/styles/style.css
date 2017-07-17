@@ -155,7 +155,7 @@
 }
 
 /*Search bar*/
-.search-bar { background-color: #345; }
+.search-bar { background-color: #4caf50; }
 .search-bar * { color: white !important; }
 .search-bar input { border-bottom-color: white; }
 .md-errors-spacer { display:none; }

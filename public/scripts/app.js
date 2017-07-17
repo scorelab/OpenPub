@@ -23,10 +23,15 @@
           templateUrl: 'components/openpub/openpub.tpl.html',
           controller: 'openpubController as vm'
         })
-        .state('newopenpub', {
-          url: '/new',
-          templateUrl: 'components/openpub/new/openpub.new.tpl.html',
-          controller: 'newopenpubController as vm'
+        .state('newpublist', {
+          url: '/newPubList',
+          templateUrl: 'components/openpub/newPublicationList/openpub.new.publication.list.tpl.html',
+          controller: 'newPubListController as vm'
+        })
+        .state('newpub', {
+          url: '/newPub',
+          templateUrl: 'components/openpub/newPublication/openpub.new.publication.tpl.html',
+          controller: 'newPubController as vm'
         });
       
   });
