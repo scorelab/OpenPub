@@ -13,6 +13,18 @@
         console.log("authObj", auth);
         console.log("vmObj", vm);
 
+        vm.initController = function () {
+            if(vm.user == null) {
+                vm.auth.$onAuthStateChanged(function(firebaseUser) {
+                    if(firebaseUser == null) {
+                        vm.user = null;
+                    } else {
+                        vm.user = firebaseUser;
+                    }
+                });
+            }
+        }
+
         vm.users = openpubFactory.getAllUsers();
 
         vm.users.$loaded()
