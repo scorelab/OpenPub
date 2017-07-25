@@ -10,6 +10,7 @@
         vm.auth = auth.ref;
         vm.user = auth.ref.$getAuth();
         vm.myPubLists = [];
+        vm.myPubs = [];
 
         vm.initializeController = initializeController;
 
@@ -30,7 +31,7 @@
                         $location.path('/auth');
                     } else {
                         vm.user = firebaseUser;
-                        vm.myPubLists = pubListService.getAllElements();
+                        vm.myPubLists = pubListService.getElementsByUserID(vm.user.uid);
                     }
                 });
             }

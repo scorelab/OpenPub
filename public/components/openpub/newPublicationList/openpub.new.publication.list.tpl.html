@@ -42,35 +42,32 @@
                             <md-input-container class="md-icon-float md-block">
                                 <!-- Use floating label instead of placeholder -->
                                 <md-icon class="fa fa-user"></md-icon>
-                                <input ng-model="vm.newOpenpub.user" type="text" disabled>
+                                <input ng-model="vm.user.displayName" type="text" disabled>
                             </md-input-container>
                         </div>
 
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Name</label>
-                                <input ng-model="vm.newOpenpub.name">
+                                <input name="listName" ng-model="vm.listName" required>
+                                <div ng-messages="newOpenpubForm.listName.$error">
+                                    <div ng-message="required">This is required.</div>
+                                </div>
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Research Area</label>
-                                <md-select ng-model="vm.newOpenpub.researchArea">
-                                <md-option ng-repeat="ra in vm.researchAreas" value="{{ra}}">
-                                    {{ra}}
-                                </md-option>
+                                <md-select name="researchArea" ng-model="vm.researchArea" required>
+                                    <md-option ng-repeat="ra in vm.researchAreas" ng-value="{{ra}}">
+                                        {{ra.Name}}
+                                    </md-option>
                                 </md-select>
+                                <div ng-messages="newOpenpubForm.researchArea.$error">
+                                    <div ng-message="required">This is required.</div>
+                                </div>
                             </md-input-container>
 
                         </div>
 
-                        <div layout-gt-sm="row" class="space-top space-bottom">
-
-                            <md-radio-group ng-model="vm.newOpenpub.status" layout="row">
-
-                                <md-radio-button value="public" class="md-primary">Public</md-radio-button>
-                                <md-radio-button value="private" class="md-primary"> Private </md-radio-button>
-
-                            </md-radio-group>
-                        </div>
                         <br/>
                         <md-chips ng-model="vm.tags" name="fruitName" readonly="vm.readonly"
                                         md-removable="vm.removable" placeholder="Tags">
@@ -78,16 +75,15 @@
                         <br/>
                         <md-input-container class="md-block">
                             <label>Description</label>
-                            <textarea ng-model="user.biography" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+                            <textarea name="description" ng-model="vm.listDescription" md-maxlength="500" rows="3" md-select-on-focus required></textarea>
+                            <div ng-messages="newOpenpubForm.description.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
                         </md-input-container>
                         <br/>
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Upload File</label>
-                            <input ng-model="vm.newOpenpub.file">
-                        </md-input-container>
                         <div layout="row" layout-align="end">
                             <md-button class="md-raised">Cancel</md-button>
-                            <md-button class="md-raised md-primary">Create New Publication</md-button>
+                            <md-button class="md-raised md-primary" type="submit" ng-click="vm.CreateElement()">Create New Publication</md-button>
                         </div>
                     </form>
                 </div>

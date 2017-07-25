@@ -32,7 +32,30 @@
           url: '/newPub',
           templateUrl: 'components/openpub/newPublication/openpub.new.publication.tpl.html',
           controller: 'newPubController as vm'
+        })
+        .state('profile', {
+          url: '/profile',
+          templateUrl: 'components/openpub/profile/profile.tpl.html',
+          controller: 'profileController as vm'
+        })
+        .state('pubList', {
+          url: '/pubList',
+          templateUrl: 'components/openpub/publicationList/publication.list.html',
+          controller: 'pubListController as vm'
         });
       
   });
 })();
+angular.module('openpub').directive('ngEnter', function() {
+    return function(scope, element, attrs) {
+        element.bind("keydown keypress", function(event) {
+            if(event.which === 13) {
+                scope.$apply(function(){
+                    scope.$eval(attrs.ngEnter, {'event': event});
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});

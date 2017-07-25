@@ -4,23 +4,17 @@
     
     angular
         .module('openpub')
-        .controller('openpubController', function(auth, openpubFactory, $firebaseArray, $scope, $mdSidenav, $mdDialog, $state, $mdToast, pubListCategoryService) {
+        .controller('pubListController', function(auth, openpubFactory, $firebaseArray, $scope, $mdSidenav, $mdDialog, $state, $mdToast, pubListCategoryService) {
         
         var vm = this;
         vm.auth = auth.ref;
         vm.user = auth.ref.$getAuth();
-        vm.researchAreas = [];
-        vm.filteredResearchAreas = [];
+        vm.researchAreas = pubListCategoryService.getAllElements();
 
         vm.initController = function () {
             $('.loading').removeClass("hidden");
-            // var newCategory = pubListCategoryService.CreateNewObject("Artificial Intelligence");
-            // pubListCategoryService.AddElement(newCategory)
-            //     .then(function(createdCodelabPage) {
-            //         alert();
-            //     });
             AuthenticateUser();
-        }
+        };
 
         vm.users = openpubFactory.getAllUsers();
 
@@ -53,7 +47,7 @@
         vm.submit = function() {
             console.error('Search function not yet implemented');
         };
-
+        
         function AuthenticateUser() {
             if(vm.user == null) {
                 vm.auth.$onAuthStateChanged(function(firebaseUser) {
@@ -62,7 +56,6 @@
                     } else {
                         vm.user = firebaseUser;
                     }
-                    LoadResearchAreas();
                 });
             }
         }
@@ -73,38 +66,16 @@
             .then(function(resultResearchAreas) {
                 vm.researchAreas = resultResearchAreas;
                 vm.filteredResearchAreas = vm.researchAreas;
-                LoadPubLists();
+                LoadPubs();
             })
             .catch(function(error) {
                 console.log("Error:", error);
             });
         }
 
-        function LoadPubLists() {
+        function LoadPubs() {
             $('.loading').addClass("hidden");
         }
-        // vm.test = function () {
-        //     // alert();
-        //     // var ref             = firebase.database().ref().child("users");
-        //     // var users           = $firebaseArray(ref);
-        //     // angular.forEach(users, function(value, key){
-        //     //     console.log(key + ': ' + value);
-        //     // });
-        //     console.log(vm.users);
-        // }
-        // var users = firebase.database().ref().child("users");
-
-        // vm.addUser = function() {
-        //     // $add on a synchronized array is like Array.push() except it saves to the database!
-        //     $scope.messages.$add({
-        //         from: $scope.user,
-        //         content: $scope.message,
-        //         timestamp: firebase.database.ServerValue.TIMESTAMP
-        //     });
-
-        //     $scope.message = "";
-        // };
-        
     });
 
 })();           

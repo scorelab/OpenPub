@@ -9,18 +9,18 @@
         var mainRef         = firebase.database().ref().child("pubs");
         var pubs            = $firebaseArray(mainRef);
 
-        this.CreateNewObject = function (name, description, authers, pubListId, url, tags) {
+        this.CreateNewObject = function (name, description, authers, pubListId, url, userName, userID, isPublic, tags, researchAreaID) {
             var pub = {};
             pub.name = name;
             pub.description = description;
             pub.authers = authers;
             pub.pubListId = pubListId;
             pub.url = url;
-            pub.categoryID = categoryID;
-            pub.date = date;
+            pub.date = Date.now();
             pub.userName = userName;
             pub.UserID = userID;
-            pub.Status = status;
+            pub.isPublic = isPublic;
+            pub.researchAreaID = researchAreaID;
             return pub;
         }
 
