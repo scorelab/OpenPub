@@ -29,10 +29,43 @@
           controller: 'newPubListController as vm'
         })
         .state('newpub', {
-          url: '/newPub',
+          url: '/newPub/:pubListId',
           templateUrl: 'components/openpub/newPublication/openpub.new.publication.tpl.html',
           controller: 'newPubController as vm'
+        })
+        .state('profile', {
+          url: '/profile',
+          templateUrl: 'components/openpub/profile/profile.tpl.html',
+          controller: 'profileController as vm'
+        })
+        .state('pubList', {
+          url: '/pubList/:pubListId',
+          templateUrl: 'components/openpub/publicationList/publication.list.html',
+          controller: 'pubListController as vm'
+        })
+        .state('myPubList', {
+          url: '/myPubList',
+          templateUrl: 'components/openpub/myPubList/openpub.my.publication.list.tpl.html',
+          controller: 'myPubListController as vm'
+        })
+        .state('pub', {
+          url: '/pub/:pubID',
+          templateUrl: 'components/openpub/publication/openpub.publication.tpl.html',
+          controller: 'pubController as vm'
         });
       
   });
 })();
+angular.module('openpub').directive('ngEnter', function() {
+    return function(scope, element, attrs) {
+        element.bind("keydown keypress", function(event) {
+            if(event.which === 13) {
+                scope.$apply(function(){
+                    scope.$eval(attrs.ngEnter, {'event': event});
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});

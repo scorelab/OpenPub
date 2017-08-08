@@ -25,7 +25,7 @@
                 <!-- Input Text -->
                 <md-input-container flex>
                 <!-- <label for="search">Search</label> -->
-                <input id="search-input" type="text" ng-model="vm.search" ng-click="vm.submit()" ng-enter="vm.submit()"/>
+                <input id="search-input" type="text" ng-model="search" />
                 </md-input-container>
 
                 <md-button class="md-icon-button" ng-click="vm.endSearch()">
@@ -34,12 +34,12 @@
             </div>
             <div ng-if="vm.user">
                 <span>
-                    <md-button ui-sref="newpublist">Add new pub list</md-button>
+                    <md-button ui-sref="myPubList">My pub Lists</md-button>
                 </span>
             </div>
             <div ng-if="vm.user">
                 <span>
-                    <md-button ui-sref="myPubList">My pub list</md-button>
+                    <md-button ui-sref="newpublist">Add new pub list</md-button>
                 </span>
             </div>
             <div ng-if="!vm.user">
@@ -55,12 +55,18 @@
         </div>
     </md-toolbar>
 </div>
-<div layout="row" layout-align="center center" layout-padding>
+<div layout="row" layout-align="left center" layout-padding>
     <div layout="column" flex="100">
-        <div layout="row" layout-align="center center" >
+        <div layout="row" layout-align="left center" >
             <div layout="column" layout-padding>
-                <text class="openpub-welcome-heading" flex>Welcome to OpenPub!</text>
-                <text class="openpub-welcome-text"flex> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown.</text>
+                <text class="openpub-welcome-heading" flex>{{vm.currentPubList.name}}</text>
+                <text class="openpub-welcome-text"flex>{{vm.currentPubList.description}}</text>
+                <!--<md-chips>-->
+                    <div layout="row">
+                        <a ng-repeat="tag in vm.currentPubList.tags" class="tag">{{tag}}</a>
+                        <!--<md-chip ng-repeat="tag in vm.currentPubList.tags">afijo asfino asfi oaf aosf</md-chip>-->
+                    </div>
+                <!--</md-chips>-->
             </div>
         </div>
         <md-divider ng-if="!$last"></md-divider>
@@ -77,23 +83,13 @@
 </div>
 <div layout="row" layout-padding>
     <div flex="10"></div>
-    <div layout="column" flex="20" layout-align="start center">
+    <!--<div layout="column" flex="20" layout-align="start center">
         <md-toolbar class="md-hue-4">
             <div class="md-toolbar-tools">
                 <span>Research Areas</span>
             </div>
         </md-toolbar>
-        <md-button class="md-raised home-category-item" ng-click="vm.filterByResearchArea(null)" layout="row">
-            <div flex="20" layout-margin>
-                <md-button class="md-fab md-mini md-primary" aria-label="Favorite">
-                    <md-icon class="fa fa-lightbulb-o"></md-icon>
-                </md-button>
-            </div>
-            <div class="md-list-item-text" layout="column" flex="80" layout-align="start start">
-                <text>All Research Areas</text>
-            </div>
-        </md-button>
-        <md-button ng-repeat="ra in vm.researchAreas" class="md-raised home-category-item" ng-click="vm.filterByResearchArea(ra)" layout="row">
+        <md-button ng-repeat="ra in vm.researchAreas" class="md-raised home-category-item" ng-click="null" layout="row">
             <div flex="20" layout-margin>
                <md-button class="md-fab md-mini md-primary" aria-label="Favorite">
                     <md-icon class="fa fa-lightbulb-o"></md-icon>
@@ -103,25 +99,25 @@
                 <text>{{ra.Name}}</text>
             </div>
         </md-button>
-    </div>
-    <div layout="column" flex="60">
+    </div>-->
+    <div layout="column" flex="80">
         <md-toolbar class="md-hue-4">
             <div class="md-toolbar-tools selector-toolbar">
-                <md-truncate >{{vm.selectedResearchAreaName}}</md-truncate>
+                <md-truncate >Publications of this list</md-truncate>
 
                 <span flex></span>
-                <md-select ng-model="weapon" placeholder="Category" class="md-no-underline">
-                    <md-option value="Followed">Followed</md-option>
-                    <md-option value="Popular">Popular</md-option>
-                    <md-option value="Recent">Recent</md-option>
-                </md-select>
+                <div ng-if="vm.user">
+                    <span>
+                        <md-button ng-click="vm.addNewPub()">Add new pub</md-button>
+                    </span>
+                </div>
             </div>
         </md-toolbar>
-        <md-card ng-repeat="pubList in vm.filteredPubLists">
+        <md-card ng-repeat="pub in vm.pubs">
             <md-card-title>
                 <md-card-title-text>
-                    <span class="md-headline">{{pubList.name}}</span>
-                    <span class="md-subhead">{{pubList.description}}</span>
+                    <span class="md-headline">{{pub.name}}</span>
+                    <span class="md-subhead">{{pub.description}}</span>
                 </md-card-title-text>
                 <md-card-title-media>
                     <md-button class="md-fab md-mini md-primary" aria-label="Favorite">
@@ -131,10 +127,10 @@
             </md-card-title>
             <md-card-actions layout="row" layout-align="start center">
                 <md-card-icon-actions>
-                    <h4 class="card-updated-date-text">By <i class="fa fa-user"></i> {{pubList.userName}}</h4>
+                    <h4 class="card-updated-date-text"><i class="fa fa-calendar"></i> {{vm.getStringDate(pub.date)}}</h4>
                 </md-card-icon-actions>
                 <div layout="row" class="card-start-button">
-                    <md-button class="md-raised md-primary" ng-click="vm.navigateToPubList(pubList)">View</md-button>
+                    <md-button class="md-raised md-primary" ng-click="vm.goToPub(pub)">View</md-button>
                 </div>
             </md-card-actions>
         </md-card>

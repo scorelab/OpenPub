@@ -4,7 +4,7 @@
             <md-toolbar md-scroll-shrink>
         <div class="md-toolbar-tools">
             <span>
-                <md-button>openpub</md-button>
+                <md-button ui-sref="openpub">OpenPub</md-button>
             </span>
             <span flex></span>
             <span>
@@ -32,7 +32,7 @@
             <md-content>
                 <md-toolbar class="md-hue-3">
                     <div class="md-toolbar-tools">
-                        <span>New Publication Upload</span>
+                        <span>New Publication</span>
                     </div>
                 </md-toolbar>
                 <div layout-margin>
@@ -42,52 +42,58 @@
                             <md-input-container class="md-icon-float md-block">
                                 <!-- Use floating label instead of placeholder -->
                                 <md-icon class="fa fa-user"></md-icon>
-                                <input ng-model="vm.newOpenpub.user" type="text" disabled>
+                                <input ng-model="vm.user.displayName" type="text" disabled>
                             </md-input-container>
                         </div>
 
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Name</label>
-                                <input ng-model="vm.newOpenpub.name">
+                                <input ng-model="vm.name">
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Research Area</label>
-                                <md-select ng-model="vm.newOpenpub.researchArea">
-                                <md-option ng-repeat="ra in vm.researchAreas" value="{{ra}}">
-                                    {{ra}}
-                                </md-option>
+                                <md-select name="researchArea" ng-model="vm.researchArea" required>
+                                    <md-option ng-repeat="ra in vm.researchAreas" ng-value="{{ra}}">
+                                        {{ra.Name}}
+                                    </md-option>
                                 </md-select>
                             </md-input-container>
 
                         </div>
 
-                        <div layout-gt-sm="row" class="space-top space-bottom">
+                            <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="vm.isPublic" class="md-primary">
+                                publicly visible
+                            </md-checkbox>
 
-                            <md-radio-group ng-model="vm.newOpenpub.status" layout="row">
-
-                                <md-radio-button value="public" class="md-primary">Public</md-radio-button>
-                                <md-radio-button value="private" class="md-primary"> Private </md-radio-button>
-
-                            </md-radio-group>
-                        </div>
+                            <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="vm.peerReviewed" class="md-primary">
+                                Peer  Reviewed
+                            </md-checkbox>
                         <br/>
-                        <md-chips ng-model="vm.tags" name="fruitName" readonly="vm.readonly"
+                        <md-chips ng-model="vm.tags" name="tags" readonly="vm.readonly"
                                         md-removable="vm.removable" placeholder="Tags">
+                        </md-chips>
+                        <md-chips ng-model="vm.authers" name="authers" readonly="vm.readonly"
+                                        md-removable="vm.removable" placeholder="Authers">
                         </md-chips>
                         <br/>
                         <md-input-container class="md-block">
                             <label>Description</label>
-                            <textarea ng-model="user.biography" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+                            <textarea ng-model="vm.description" md-maxlength="3000" rows="6" md-select-on-focus></textarea>
                         </md-input-container>
                         <br/>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Upload File</label>
-                            <input ng-model="vm.newOpenpub.file">
+                            <label>Publication Link</label>
+                            <input ng-model="vm.url">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Venue</label>
+                            <input ng-model="vm.venue">
                         </md-input-container>
                         <div layout="row" layout-align="end">
                             <md-button class="md-raised">Cancel</md-button>
-                            <md-button class="md-raised md-primary">Create New Publication</md-button>
+                            <md-button class="md-raised md-primary" ng-click="vm.CreateElement()">Create New Publication</md-button>
+                        </div>
                         </div>
                     </form>
                 </div>

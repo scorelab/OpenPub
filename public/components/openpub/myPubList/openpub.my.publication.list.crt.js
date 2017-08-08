@@ -4,15 +4,16 @@
     
     angular
         .module('openpub')
-        .controller('openpubController', function(auth, openpubFactory, $firebaseArray, $scope, $mdSidenav, $mdDialog, $state, $mdToast, $location, pubListCategoryService, pubListService) {
+        .controller('myPubListController', function(auth, openpubFactory, $firebaseArray, $scope, $mdSidenav, $mdDialog, $state, $mdToast, $location, pubListCategoryService, pubListService) {
         
         var vm = this;
         vm.auth = auth.ref;
         vm.user = auth.ref.$getAuth();
-        vm.researchAreas = null;
-        vm.filteredResearchAreas = null;
+        vm.researchAreas = [];
+        vm.filteredResearchAreas = [];
         vm.allPubLists = null;
         vm.filteredPubLists = null;
+        vm.loadPubListFlag = false;
         vm.selectedResearchAreaName = "All Publication Lists";
 
         vm.initController = function () {
@@ -56,9 +57,24 @@
         vm.submit = function() {
             filterUsingSearch();
         };
-
         vm.navigateToPubList = function(pubList) {
             $location.path('/pubList/' + pubList.$id);
+        };
+
+        vm.getStringDate = function (d) {
+            var date = new Date(d);
+            var monthNames = [
+                "January", "February", "March",
+                "April", "May", "June", "July",
+                "August", "September", "October",
+                "November", "December"
+            ];
+
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+            var year = date.getFullYear();
+
+            return day + ' ' + monthNames[monthIndex] + ' ' + year;
         };
 
         vm.filterByResearchArea = function(ra) {
@@ -93,39 +109,45 @@
         }
 
         function LoadResearchAreas() {
-            if(vm.researchAreas == null){
-                vm.researchAreas = pubListCategoryService.getAllElements();
-                vm.researchAreas.$loaded()
-                .then(function(resultResearchAreas) {
-                    vm.researchAreas = resultResearchAreas;
-                    vm.filteredResearchAreas = vm.researchAreas;
-                    LoadPubLists();
-                })
-                .catch(function(error) {
-                    console.log("Error:", error);
-                });
-            }
-            else {
+            vm.researchAreas = pubListCategoryService.getAllElements();
+            vm.researchAreas.$loaded()
+            .then(function(resultResearchAreas) {
+                vm.researchAreas = resultResearchAreas;
+                // vm.filteredResearchAreas = vm.researchAreas;
                 LoadPubLists();
-            }
+            })
+            .catch(function(error) {
+                console.log("Error:", error);
+            });
         }
 
         function LoadPubLists() {
-            if(vm.filteredPubLists == null) {
-                vm.allPubLists = pubListService.getAllElements();
-                vm.allPubLists.$loaded()
-                .then(function(resultPubLists) {
-                    vm.allPubLists = resultPubLists;
-                    vm.filteredPubLists = vm.allPubLists;
+            if(vm.filteredPubLists == null){
+                vm.filteredPubLists = pubListService.getElementsByUserID(vm.user.uid);
+                var allPubLists = pubListService.getAllElements();
+                allPubLists.$loaded()
+                .then(function(result) {
+                    vm.allPubLists = result;
+                    vm.filteredPubLists = $.grep(vm.allPubLists, function(e){ return e.userID == vm.user.uid; })
+                    FilterResearchAreas();
                     $('.loading').addClass("hidden");
                 })
                 .catch(function(error) {
                     console.log("Error:", error);
                 });
             } else {
-                vm.filteredCodelabs = vm.codelabs;
+                FilterResearchAreas();
                 $('.loading').addClass("hidden");
             }
+        }
+
+        function FilterResearchAreas() {
+            angular.forEach(vm.researchAreas, function(value, key) {
+                var pubListForRA = $.grep(vm.filteredPubLists, function(e){ return e.researchAreaID == value.$id; })
+                if(pubListForRA.length > 0) {
+                    vm.filteredResearchAreas.push(value);
+                }
+            });
         }
         // vm.test = function () {
         //     // alert();
