@@ -20,14 +20,15 @@
         vm.listName = null;
         vm.listDescription = null;
         vm.researchArea = null;
+        vm.isPublic = false;
 
         vm.CreateElement = function () {
             if(vm.listName != null && vm.listDescription != null && vm.researchArea != null){
-                var newPubList = pubListService.CreateNewObject(vm.user.uid, vm.listName, vm.listDescription, vm.tags, vm.user.displayName, vm.researchArea.$id);
+                var newPubList = pubListService.CreateNewObject(vm.user.uid, vm.listName, vm.listDescription, vm.tags, vm.user.displayName, vm.researchArea.$id, vm.isPublic);
                 pubListService.AddElement(newPubList)
                 .then(function(createdList) {
                     newPubList = createdList;
-                    // $location.path('/pubList/' + createdList.$id);
+                    $location.path('/pubList/' + createdList.$id);
                 });
             }
         };

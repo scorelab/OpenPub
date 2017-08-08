@@ -9,7 +9,7 @@
         var ref                 = firebase.database().ref().child("pubLists");
         var pubLists            = $firebaseArray(ref);
 
-        this.CreateNewObject = function (userID, name, description, tags, userName, researchAreaID) {
+        this.CreateNewObject = function (userID, name, description, tags, userName, researchAreaID, isPublic) {
             var pubList = {};
             pubList.isPublic = false;
             pubList.date = Date.now();
@@ -19,6 +19,7 @@
             pubList.tags = tags;
             pubList.userName = userName;
             pubList.researchAreaID = researchAreaID;
+            pubList.isPublic = isPublic;
             return pubList;
         }
         
@@ -54,6 +55,14 @@
         this.findByID = function (id) {
             var requestedPubList = $firebaseObject(ref.child(id));
             return requestedPubList;
+            // .$loaded().then(function() {
+            //     // console.log("loaded record:", obj.$id, obj.someOtherKeyInData);
+
+            //     // // To iterate the key/value pairs of the object, use angular.forEach()
+            //     // angular.forEach(obj, function(value, key) {
+            //     //     console.log(key, value);
+            //     // });
+            // });
         };
 
     });

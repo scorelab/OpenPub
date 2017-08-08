@@ -29,7 +29,7 @@
           controller: 'newPubListController as vm'
         })
         .state('newpub', {
-          url: '/newPub',
+          url: '/newPub/:pubListId',
           templateUrl: 'components/openpub/newPublication/openpub.new.publication.tpl.html',
           controller: 'newPubController as vm'
         })
@@ -39,9 +39,19 @@
           controller: 'profileController as vm'
         })
         .state('pubList', {
-          url: '/pubList',
+          url: '/pubList/:pubListId',
           templateUrl: 'components/openpub/publicationList/publication.list.html',
           controller: 'pubListController as vm'
+        })
+        .state('myPubList', {
+          url: '/myPubList',
+          templateUrl: 'components/openpub/myPubList/openpub.my.publication.list.tpl.html',
+          controller: 'myPubListController as vm'
+        })
+        .state('pub', {
+          url: '/pub/:pubID',
+          templateUrl: 'components/openpub/publication/openpub.publication.tpl.html',
+          controller: 'pubController as vm'
         });
       
   });

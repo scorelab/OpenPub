@@ -301,3 +301,16 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
 .hidden {
     visibility: hidden;
 }
+
+.tag{
+    background: #4caf50;
+    color: white;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 0.5%;
+    padding-top: 0.5%;
+    border-radius: 17px;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    cursor: pointer;
+}

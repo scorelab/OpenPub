@@ -9,11 +9,12 @@
         var mainRef         = firebase.database().ref().child("pubs");
         var pubs            = $firebaseArray(mainRef);
 
-        this.CreateNewObject = function (name, description, authers, pubListId, url, userName, userID, isPublic, tags, researchAreaID) {
+        this.CreateNewObject = function (name, description, authers, pubListId, url, userName, userID, isPublic, tags, researchAreaID, peerReviewed, venue) {
             var pub = {};
             pub.name = name;
             pub.description = description;
             pub.authers = authers;
+            pub.tags = tags;
             pub.pubListId = pubListId;
             pub.url = url;
             pub.date = Date.now();
@@ -21,6 +22,8 @@
             pub.UserID = userID;
             pub.isPublic = isPublic;
             pub.researchAreaID = researchAreaID;
+            pub.peerReviewed = peerReviewed;
+            pub.venue = venue;
             return pub;
         }
 
@@ -55,7 +58,8 @@
         };
 
         this.findByID = function (id) {
-            
+            var requestedPub = $firebaseObject(mainRef.child(id));
+            return requestedPub;
         }
     });
 })();
