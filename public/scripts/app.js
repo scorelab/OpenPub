@@ -7,7 +7,7 @@
       .config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
       
       $mdThemingProvider.theme('default')
-        .primaryPalette('green')
+        .primaryPalette('teal')
         .accentPalette('light-blue');
       
       $urlRouterProvider.otherwise('/');

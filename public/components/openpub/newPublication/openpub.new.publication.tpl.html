@@ -82,6 +82,7 @@
                         <md-chips ng-model="vm.authers" name="authers" readonly="vm.readonly"
                                         md-removable="vm.removable" placeholder="Authers">
                         </md-chips>
+                        <p style="color: red;" ng-if="vm.clickedFirstTime && vm.authers.length == 0">This is required.</p>
                         <br/>
                         <md-input-container class="md-block">
                             <label>Description</label>

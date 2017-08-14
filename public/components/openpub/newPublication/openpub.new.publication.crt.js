@@ -25,9 +25,11 @@
         vm.researchArea = null;
         vm.peerReviewed = false;
         vm.venue = "";
+        vm.clickedFirstTime = false;
 
         vm.CreateElement = function () {
-            // if(vm.name != null && vm.description != null && vm.researchArea != null && vm.authers.length != 0 ){
+            vm.clickedFirstTime = true;
+            if(vm.name != null && vm.description != null && vm.researchArea != null && vm.authers.length != 0 && vm.url != null && vm.venue != null){
                 var newPub = pubService.CreateNewObject(vm.name, 
                                                         vm.description, 
                                                         vm.authers, 
@@ -45,7 +47,7 @@
                     newPub = createdPub;
                     $location.path('/pub/' + createdPub.$id);
                 });
-            // }
+            }
         };
 
         function authenticateUser(){
