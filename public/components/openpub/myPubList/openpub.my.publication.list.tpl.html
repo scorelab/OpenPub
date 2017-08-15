@@ -108,6 +108,9 @@
                     <span class="md-subhead">{{pubList.description}}</span>
                 </md-card-title-text>
                 <md-card-title-media>
+                    <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="pubList.isPublic"  ng-change="vm.updatePublic(pubList)" class="md-primary">
+                        Public
+                    </md-checkbox>
                     <md-button class="md-fab md-mini md-primary" aria-label="Favorite">
                         <md-icon class="fa fa-lightbulb-o"></md-icon>
                     </md-button>

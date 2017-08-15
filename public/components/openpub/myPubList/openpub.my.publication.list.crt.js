@@ -87,6 +87,15 @@
             }
         };
 
+        vm.updatePublic = function (pubList) {
+            pubListService.SaveElement(pubList)
+            .then(function(saved) {
+                if(saved) {
+                    //Success
+                }
+            });
+        };
+
         function filterUsingSearch() {
             var filteredByName = $.grep(vm.allPubLists, function(e){ return e.name.toLowerCase().includes(vm.search.toLowerCase()); });
             vm.filteredPubLists = filteredByName;

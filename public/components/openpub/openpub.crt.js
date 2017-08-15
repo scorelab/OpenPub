@@ -63,17 +63,33 @@
 
         vm.filterByResearchArea = function(ra) {
             if(ra == null) {
-                vm.filteredPubLists = vm.allPubLists;
+                vm.filteredPubLists = [];
+                angular.forEach(vm.allPubLists, function(value, key) {
+                    if(value.isPublic) {
+                        vm.filteredPubLists.push(value);
+                    }
+                });
                 vm.selectedResearchAreaName = "All Publication Lists";
             } else {
-                vm.filteredPubLists = $.grep(vm.allPubLists, function(e){ return e.researchAreaID == ra.$id; });
+                var filteredByArea = $.grep(vm.allPubLists, function(e){ return e.researchAreaID == ra.$id; });
+                vm.filteredPubLists = [];
+                angular.forEach(filteredByArea, function(value, key) {
+                    if(value.isPublic) {
+                        vm.filteredPubLists.push(value);
+                    }
+                });
                 vm.selectedResearchAreaName = ra.Name;
             }
         };
 
         function filterUsingSearch() {
             var filteredByName = $.grep(vm.allPubLists, function(e){ return e.name.toLowerCase().includes(vm.search.toLowerCase()); });
-            vm.filteredPubLists = filteredByName;
+            vm.filteredPubLists = [];
+            angular.forEach(filteredByName, function(value, key) {
+                if(value.isPublic) {
+                    vm.filteredPubLists.push(value);
+                }
+            });
             vm.selectedResearchAreaName = "Search Results";
         }
 
@@ -116,7 +132,12 @@
                 vm.allPubLists.$loaded()
                 .then(function(resultPubLists) {
                     vm.allPubLists = resultPubLists;
-                    vm.filteredPubLists = vm.allPubLists;
+                    vm.filteredPubLists = [];
+                    angular.forEach(vm.allPubLists, function(value, key) {
+                        if(value.isPublic) {
+                            vm.filteredPubLists.push(value);
+                        }
+                    });
                     $('.loading').addClass("hidden");
                 })
                 .catch(function(error) {
