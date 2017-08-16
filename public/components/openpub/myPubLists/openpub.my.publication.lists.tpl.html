@@ -25,17 +25,12 @@
                 <!-- Input Text -->
                 <md-input-container flex>
                 <!-- <label for="search">Search</label> -->
-                <input id="search-input" type="text" ng-model="search" />
+                <input id="search-input" type="text" ng-model="vm.search" ng-click="vm.submit()" ng-enter="vm.submit()"/>
                 </md-input-container>
 
                 <md-button class="md-icon-button" ng-click="vm.endSearch()">
                 <md-icon>close</md-icon>
                 </md-button>
-            </div>
-            <div ng-if="vm.user">
-                <span>
-                    <md-button ui-sref="myPubList">My pub Lists</md-button>
-                </span>
             </div>
             <div ng-if="vm.user">
                 <span>
@@ -55,23 +50,6 @@
         </div>
     </md-toolbar>
 </div>
-<div layout="row" layout-align="left center" layout-padding>
-    <div layout="column" flex="100">
-        <div layout="row" layout-align="left center" >
-            <div layout="column" layout-padding>
-                <text class="openpub-welcome-heading" flex>{{vm.currentPubList.name}}</text>
-                <text class="openpub-welcome-text"flex>{{vm.currentPubList.description}}</text>
-                <!--<md-chips>-->
-                    <div layout="row">
-                        <a ng-repeat="tag in vm.currentPubList.tags" class="tag">{{tag}}</a>
-                        <!--<md-chip ng-repeat="tag in vm.currentPubList.tags">afijo asfino asfi oaf aosf</md-chip>-->
-                    </div>
-                <!--</md-chips>-->
-            </div>
-        </div>
-        <md-divider ng-if="!$last"></md-divider>
-    </div>
-</div>
 <div layout="row">
     <div layout="column"></div>
     <md-divider ng-if="!$last"></md-divider>
@@ -83,13 +61,23 @@
 </div>
 <div layout="row" layout-padding>
     <div flex="10"></div>
-    <!--<div layout="column" flex="20" layout-align="start center">
+    <div layout="column" flex="20" layout-align="start center">
         <md-toolbar class="md-hue-4">
             <div class="md-toolbar-tools">
                 <span>Research Areas</span>
             </div>
         </md-toolbar>
-        <md-button ng-repeat="ra in vm.researchAreas" class="md-raised home-category-item" ng-click="null" layout="row">
+        <md-button class="md-raised home-category-item" ng-click="vm.filterByResearchArea(null)" layout="row">
+            <div flex="20" layout-margin>
+               <md-button class="md-fab md-mini md-primary" aria-label="Favorite">
+                    <md-icon class="fa fa-lightbulb-o"></md-icon>
+                </md-button>
+            </div>
+            <div class="md-list-item-text" layout="column" flex="80" layout-align="start start">
+                <text>All Research Areas</text>
+            </div>
+        </md-button>
+        <md-button ng-repeat="ra in vm.filteredResearchAreas" class="md-raised home-category-item" ng-click="vm.filterByResearchArea(ra)" layout="row">
             <div flex="20" layout-margin>
                <md-button class="md-fab md-mini md-primary" aria-label="Favorite">
                     <md-icon class="fa fa-lightbulb-o"></md-icon>
@@ -99,28 +87,28 @@
                 <text>{{ra.Name}}</text>
             </div>
         </md-button>
-    </div>-->
-    <div layout="column" flex="80">
+    </div>
+    <div layout="column" flex="60">
         <md-toolbar class="md-hue-4">
             <div class="md-toolbar-tools selector-toolbar">
-                <md-truncate >Publications of this list</md-truncate>
+                <md-truncate >{{vm.selectedResearchAreaName}}</md-truncate>
 
-                <span flex></span>
-                <div ng-if="vm.user">
-                    <span>
-                        <md-button ng-click="vm.addNewPub()">Add new pub</md-button>
-                    </span>
-                </div>
+                <!--<span flex></span>
+                <md-select ng-model="weapon" placeholder="Category" class="md-no-underline">
+                    <md-option value="Followed">Followed</md-option>
+                    <md-option value="Popular">Popular</md-option>
+                    <md-option value="Recent">Recent</md-option>
+                </md-select>-->
             </div>
         </md-toolbar>
-        <md-card ng-repeat="pub in vm.pubs">
+        <md-card ng-repeat="pubList in vm.filteredPubLists">
             <md-card-title>
                 <md-card-title-text>
-                    <span class="md-headline">{{pub.name}}</span>
-                    <span class="md-subhead">{{pub.description}}</span>
+                    <span class="md-headline">{{pubList.name}}</span>
+                    <span class="md-subhead">{{pubList.description}}</span>
                 </md-card-title-text>
                 <md-card-title-media>
-                    <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="pub.isPublic"  ng-change="vm.updatePublic(pubList)" class="md-primary">
+                    <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="pubList.isPublic"  ng-change="vm.updatePublic(pubList)" class="md-primary">
                         Public
                     </md-checkbox>
                     <md-button class="md-fab md-mini md-primary" aria-label="Favorite">
@@ -130,10 +118,10 @@
             </md-card-title>
             <md-card-actions layout="row" layout-align="start center">
                 <md-card-icon-actions>
-                    <h4 class="card-updated-date-text"><i class="fa fa-calendar"></i> {{vm.getStringDate(pub.date)}}</h4>
+                    <h4 class="card-updated-date-text"><i class="fa fa-calendar"></i> {{vm.getStringDate(pubList.date)}}</h4>
                 </md-card-icon-actions>
                 <div layout="row" class="card-start-button">
-                    <md-button class="md-raised md-primary" ng-click="vm.goToPub(pub)">View</md-button>
+                    <md-button class="md-raised md-primary" ng-click="vm.navigateToPubList(pubList)">View</md-button>
                 </div>
             </md-card-actions>
         </md-card>

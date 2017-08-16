@@ -4,27 +4,21 @@
     
     angular
         .module('openpub')
-        .controller('myPubListController', function(auth, openpubFactory, $firebaseArray, $scope, $mdSidenav, $mdDialog, $state, $mdToast, $location, pubListCategoryService, pubListService) {
+        .controller('myPubListController', function(auth, openpubFactory, $firebaseArray, $scope, $mdSidenav, $mdDialog, $state, $mdToast, $stateParams, $location, pubService, pubListCategoryService, pubListService) {
         
         var vm = this;
         vm.auth = auth.ref;
         vm.user = auth.ref.$getAuth();
-        vm.researchAreas = [];
-        vm.filteredResearchAreas = [];
-        vm.allPubLists = null;
-        vm.filteredPubLists = null;
-        vm.loadPubListFlag = false;
-        vm.selectedResearchAreaName = "All Publication Lists";
+        vm.researchAreas = pubListCategoryService.getAllElements();
+        vm.currentPubList = null;
+        vm.tags = [];
+        vm.pubs = null;
+        vm.pubLoadedFlag = false;
 
         vm.initController = function () {
             $('.loading').removeClass("hidden");
-            // var newCategory = pubListCategoryService.CreateNewObject("Artificial Intelligence");
-            // pubListCategoryService.AddElement(newCategory)
-            //     .then(function(createdCodelabPage) {
-            //         alert();
-            //     });
             AuthenticateUser();
-        }
+        };
 
         vm.users = openpubFactory.getAllUsers();
 
@@ -55,10 +49,13 @@
             return vm.search = null;
         };
         vm.submit = function() {
-            filterUsingSearch();
+            console.error('Search function not yet implemented');
         };
-        vm.navigateToPubList = function(pubList) {
-            $location.path('/pubList/' + pubList.$id);
+        vm.addNewPub = function () {
+            $location.path('/newPub/' + vm.currentPubList.$id);
+        };
+        vm.goToPub = function (pub) {
+            $location.path('/pub/' + pub.$id);
         };
 
         vm.getStringDate = function (d) {
@@ -77,16 +74,6 @@
             return day + ' ' + monthNames[monthIndex] + ' ' + year;
         };
 
-        vm.filterByResearchArea = function(ra) {
-            if(ra == null) {
-                vm.filteredPubLists = vm.allPubLists;
-                vm.selectedResearchAreaName = "All Publication Lists";
-            } else {
-                vm.filteredPubLists = $.grep(vm.allPubLists, function(e){ return e.researchAreaID == ra.$id; });
-                vm.selectedResearchAreaName = ra.Name;
-            }
-        };
-
         vm.updatePublic = function (pubList) {
             pubListService.SaveElement(pubList)
             .then(function(saved) {
@@ -95,91 +82,72 @@
                 }
             });
         };
-
-        function filterUsingSearch() {
-            var filteredByName = $.grep(vm.allPubLists, function(e){ return e.name.toLowerCase().includes(vm.search.toLowerCase()); });
-            vm.filteredPubLists = filteredByName;
-            vm.selectedResearchAreaName = "Search Results";
-        }
-
+        
         function AuthenticateUser() {
             if(vm.user == null) {
                 vm.auth.$onAuthStateChanged(function(firebaseUser) {
                     if(firebaseUser == null) {
                         vm.user = null;
+                        if($stateParams.pubListId == null) {
+                            $location.path('/')
+                        } else {
+                            LoadComponents();
+                        }
                     } else {
                         vm.user = firebaseUser;
+                        if($stateParams.pubListId == null) {
+                            $location.path('/')
+                        } else {
+                            LoadComponents();
+                        }
                     }
-                    LoadResearchAreas();
                 });
             } else {
-                LoadResearchAreas();
+                LoadComponents();
             }
         }
 
-        function LoadResearchAreas() {
-            vm.researchAreas = pubListCategoryService.getAllElements();
-            vm.researchAreas.$loaded()
-            .then(function(resultResearchAreas) {
-                vm.researchAreas = resultResearchAreas;
-                // vm.filteredResearchAreas = vm.researchAreas;
-                LoadPubLists();
-            })
-            .catch(function(error) {
-                console.log("Error:", error);
+        function LoadComponents() {
+            vm.currentPubList = pubListService.findByID($stateParams.pubListId);
+            vm.tags = vm.currentPubList.tags;
+            vm.currentPubList.$loaded().then(function() {
+                vm.tags = vm.currentPubList.tags;
+                LoadPubs();
             });
+            // if(vm.currentPubList == null){
+            //     vm.tags = vm.currentPubList.tags;
+            //     vm.currentPubList = pubListService.findByID($stateParams.pubListId);
+            // }
+            // vm.researchAreas = pubListCategoryService.getAllElements();
+            // vm.researchAreas.$loaded()
+            // .then(function(resultResearchAreas) {
+            //     vm.researchAreas = resultResearchAreas;
+            //     vm.filteredResearchAreas = vm.researchAreas;
+            //     LoadPubs();
+            // })
+            // .catch(function(error) {
+            //     console.log("Error:", error);
+            // });
         }
 
-        function LoadPubLists() {
-            if(vm.filteredPubLists == null){
-                vm.filteredPubLists = pubListService.getElementsByUserID(vm.user.uid);
-                var allPubLists = pubListService.getAllElements();
-                allPubLists.$loaded()
+        function LoadPubs() {
+            vm.pubs = pubService.findPubs(vm.currentPubList.$id);
+             if(vm.pubs == null || vm.pubLoadedFlag == false){
+                var allPubs = pubService.getAllElements();
+                allPubs.$loaded()
                 .then(function(result) {
-                    vm.allPubLists = result;
-                    vm.filteredPubLists = $.grep(vm.allPubLists, function(e){ return e.userID == vm.user.uid; })
-                    FilterResearchAreas();
+                    vm.pubLoadedFlag = true;
+                    allPubs = result;
+                    vm.pubs = $.grep(allPubs, function(e){ return e.pubListId == vm.currentPubList.$id; })
                     $('.loading').addClass("hidden");
                 })
                 .catch(function(error) {
                     console.log("Error:", error);
                 });
             } else {
-                FilterResearchAreas();
                 $('.loading').addClass("hidden");
             }
         }
-
-        function FilterResearchAreas() {
-            angular.forEach(vm.researchAreas, function(value, key) {
-                var pubListForRA = $.grep(vm.filteredPubLists, function(e){ return e.researchAreaID == value.$id; })
-                if(pubListForRA.length > 0) {
-                    vm.filteredResearchAreas.push(value);
-                }
-            });
-        }
-        // vm.test = function () {
-        //     // alert();
-        //     // var ref             = firebase.database().ref().child("users");
-        //     // var users           = $firebaseArray(ref);
-        //     // angular.forEach(users, function(value, key){
-        //     //     console.log(key + ': ' + value);
-        //     // });
-        //     console.log(vm.users);
-        // }
-        // var users = firebase.database().ref().child("users");
-
-        // vm.addUser = function() {
-        //     // $add on a synchronized array is like Array.push() except it saves to the database!
-        //     $scope.messages.$add({
-        //         from: $scope.user,
-        //         content: $scope.message,
-        //         timestamp: firebase.database.ServerValue.TIMESTAMP
-        //     });
-
-        //     $scope.message = "";
-        // };
-        
     });
 
 })();           

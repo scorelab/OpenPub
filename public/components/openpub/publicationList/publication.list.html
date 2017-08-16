@@ -2,7 +2,7 @@
     <md-toolbar md-scroll-shrink class="md-primary">
         <div class="md-toolbar-tools">
             <span>
-                <md-button>OpenPub</md-button>
+                <md-button ui-sref="openpub">OpenPub</md-button>
             </span>
             <span flex></span>
             <!-- Pre-Search Bar -->
@@ -34,7 +34,7 @@
             </div>
             <div ng-if="vm.user">
                 <span>
-                    <md-button ui-sref="myPubList">My pub Lists</md-button>
+                    <md-button ui-sref="myPubLists">My pub Lists</md-button>
                 </span>
             </div>
             <div ng-if="vm.user">

@@ -43,15 +43,20 @@
           templateUrl: 'components/openpub/publicationList/publication.list.html',
           controller: 'pubListController as vm'
         })
-        .state('myPubList', {
-          url: '/myPubList',
-          templateUrl: 'components/openpub/myPubList/openpub.my.publication.list.tpl.html',
-          controller: 'myPubListController as vm'
+        .state('myPubLists', {
+          url: '/myPubLists',
+          templateUrl: 'components/openpub/myPubLists/openpub.my.publication.lists.tpl.html',
+          controller: 'myPubListsController as vm'
         })
         .state('pub', {
           url: '/pub/:pubID',
           templateUrl: 'components/openpub/publication/openpub.publication.tpl.html',
           controller: 'pubController as vm'
+        })
+        .state('myPubList', {
+          url: '/myPubList/:pubListId',
+          templateUrl: 'components/openpub/myPubList/openpub.my.publication.list.tpl.html',
+          controller: 'myPubListController as vm'
         });
       
   });
