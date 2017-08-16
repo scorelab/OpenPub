@@ -74,8 +74,8 @@
             return day + ' ' + monthNames[monthIndex] + ' ' + year;
         };
 
-        vm.updatePublic = function (pubList) {
-            pubListService.SaveElement(pubList)
+        vm.updatePublic = function (pub) {
+            pubService.SaveElement(pub)
             .then(function(saved) {
                 if(saved) {
                     //Success

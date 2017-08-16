@@ -129,7 +129,13 @@
                 .then(function(result) {
                     vm.pubLoadedFlag = true;
                     allPubs = result;
-                    vm.pubs = $.grep(allPubs, function(e){ return e.pubListId == vm.currentPubList.$id; })
+                    var filteredLists = $.grep(allPubs, function(e){ return e.pubListId == vm.currentPubList.$id; })
+                    vm.pubs = [];
+                    angular.forEach(filteredLists, function(value, key) {
+                        if(value.isPublic) {
+                            vm.pubs.push(value);
+                        }
+                    });
                     $('.loading').addClass("hidden");
                 })
                 .catch(function(error) {
