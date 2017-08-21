@@ -11,6 +11,7 @@
         vm.user = auth.ref.$getAuth();
         vm.researchAreas = pubListCategoryService.getAllElements();
         vm.currentPubList = null;
+        vm.allPubLists = null;
         vm.tags = [];
         vm.pubs = null;
         vm.pubLoadedFlag = false;
@@ -49,7 +50,7 @@
             return vm.search = null;
         };
         vm.submit = function() {
-            console.error('Search function not yet implemented');
+            filterUsingSearch();
         };
         vm.addNewPub = function () {
             $location.path('/newPub/' + vm.currentPubList.$id)
@@ -73,6 +74,17 @@
 
             return day + ' ' + monthNames[monthIndex] + ' ' + year;
         };
+
+        function filterUsingSearch() {
+            var filteredByName = $.grep(vm.allPubLists, function(e){ return e.name.toLowerCase().includes(vm.search.toLowerCase()); });
+            vm.pubs = [];
+            angular.forEach(filteredByName, function(value, key) {
+                if(value.isPublic) {
+                    vm.pubs.push(value);
+                }
+            });
+            vm.selectedResearchAreaName = "Search Results";
+        }
         
         function AuthenticateUser() {
             if(vm.user == null) {
@@ -136,6 +148,7 @@
                             vm.pubs.push(value);
                         }
                     });
+                    vm.allPubLists = vm.pubs;
                     $('.loading').addClass("hidden");
                 })
                 .catch(function(error) {

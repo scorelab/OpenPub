@@ -98,7 +98,10 @@
 
         function filterUsingSearch() {
             var filteredByName = $.grep(vm.allPubLists, function(e){ return e.name.toLowerCase().includes(vm.search.toLowerCase()); });
-            vm.filteredPubLists = filteredByName;
+            vm.filteredPubLists = [];
+            angular.forEach(filteredByName, function(value, key) {
+                vm.filteredPubLists.push(value);
+            });
             vm.selectedResearchAreaName = "Search Results";
         }
 

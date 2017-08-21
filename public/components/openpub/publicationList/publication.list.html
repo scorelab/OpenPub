@@ -25,7 +25,7 @@
                 <!-- Input Text -->
                 <md-input-container flex>
                 <!-- <label for="search">Search</label> -->
-                <input id="search-input" type="text" ng-model="search" />
+                <input id="search-input" type="text" ng-model="vm.search" ng-click="vm.submit()" ng-enter="vm.submit()"/>
                 </md-input-container>
 
                 <md-button class="md-icon-button" ng-click="vm.endSearch()">
