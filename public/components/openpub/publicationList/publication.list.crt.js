@@ -15,6 +15,7 @@
         vm.tags = [];
         vm.pubs = null;
         vm.pubLoadedFlag = false;
+        vm.canAddPub = false;
 
         vm.initController = function () {
             $('.loading').removeClass("hidden");
@@ -74,6 +75,12 @@
 
             return day + ' ' + monthNames[monthIndex] + ' ' + year;
         };
+
+        function ValidateUserAndPub() {
+            if(vm.user.uid == vm.currentPubList.userID){
+                vm.canAddPub = true;
+            }
+        }
 
         function filterUsingSearch() {
             var filteredByName = $.grep(vm.allPubLists, function(e){ return e.name.toLowerCase().includes(vm.search.toLowerCase()); });
@@ -149,6 +156,7 @@
                         }
                     });
                     vm.allPubLists = vm.pubs;
+                    ValidateUserAndPub();
                     $('.loading').addClass("hidden");
                 })
                 .catch(function(error) {

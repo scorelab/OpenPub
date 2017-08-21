@@ -4,7 +4,7 @@
     
     angular
         .module('openpub')
-        .controller('newPubController', function(auth, $scope, $mdSidenav, $mdDialog, $state, $mdToast, $location, $stateParams, pubService, pubListCategoryService) {
+        .controller('newPubController', function(auth, $scope, $mdSidenav, $mdDialog, $state, $mdToast, $location, $stateParams, pubService, pubListCategoryService, pubListService) {
         
         var vm = this;
         vm.auth = auth.ref;
@@ -59,7 +59,10 @@
                         vm.user = firebaseUser;
                         vm.researchAreas = pubListCategoryService.getAllElements();
                         if($stateParams.pubListId == null) {
-                            $location.path('/myPubList')
+                            vm.pubList = pubService.findByID($stateParams.pubListId);
+                            if(vm.pubList.userID != vm.user.uid) {
+                                $location.path('/myPubList');
+                            }
                         }
                     }
                 });

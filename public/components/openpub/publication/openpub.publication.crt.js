@@ -39,6 +39,10 @@
             return day + ' ' + monthNames[monthIndex] + ' ' + year;
         };
 
+        vm.GoTOEditPub = function () {
+            $location.path('/editPub/' + vm.publication.$id);
+        };
+
         function AuthenticateUser() {
             if(vm.user == null) {
                 vm.auth.$onAuthStateChanged(function(firebaseUser) {

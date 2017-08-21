@@ -53,6 +53,11 @@
           templateUrl: 'components/openpub/publication/openpub.publication.tpl.html',
           controller: 'pubController as vm'
         })
+        .state('editpub', {
+          url: '/editPub/:pubID',
+          templateUrl: 'components/openpub/editPublication/openpub.edit.publication.tpl.html',
+          controller: 'editPubController as vm'
+        })
         .state('myPubList', {
           url: '/myPubList/:pubListId',
           templateUrl: 'components/openpub/myPubList/openpub.my.publication.list.tpl.html',
