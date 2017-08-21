@@ -12,7 +12,7 @@
             </div>
             <div ng-if="vm.user">
                 <span>
-                    <md-button ui-sref="myPubList">My pub list</md-button>
+                    <md-button ui-sref="myPubLists">My pub list</md-button>
                 </span>
             </div>
             <div ng-if="!vm.user">
@@ -46,7 +46,7 @@
                     <span class="md-headline">{{vm.publication.name}}</span>
                 </md-card-title-text>
                 <md-card-title-media>
-                    <md-button class="md-primary md-raised" ng-click="vm.GoTOEditPub()" aria-label="Favorite">
+                    <md-button class="md-primary md-raised" ng-if="vm.isEditable" ng-click="vm.GoTOEditPub()" aria-label="Favorite">
                         <md-icon class="fa fa-lightbulb-o"></md-icon>
                         Edit Pub
                     </md-button>

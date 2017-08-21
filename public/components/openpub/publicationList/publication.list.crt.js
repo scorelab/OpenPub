@@ -77,7 +77,7 @@
         };
 
         function ValidateUserAndPub() {
-            if(vm.user.uid == vm.currentPubList.userID){
+            if(vm.user != null && vm.user.uid == vm.currentPubList.userID){
                 vm.canAddPub = true;
             }
         }

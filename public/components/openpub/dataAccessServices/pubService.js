@@ -38,6 +38,16 @@
             });
         };
 
+        this.RemoveElement = function (item) {
+            return pubs.$remove(item).then(function(ref) {
+                var removed = false;
+                if(ref.key === item.$id) {
+                    removed = true;
+                }
+                return removed;
+            });
+        };
+
         this.findPubs = function (pubListId) {
             var requestedPubs = [];
             angular.forEach(requestedPubs, function(value, key){

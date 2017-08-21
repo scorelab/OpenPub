@@ -121,6 +121,7 @@
                     <h4 class="card-updated-date-text"><i class="fa fa-calendar"></i> {{vm.getStringDate(pubList.date)}}</h4>
                 </md-card-icon-actions>
                 <div layout="row" class="card-start-button">
+                    <md-button class="md-raised md-warn" ng-click="vm.deletePubList(pubList)">Delete</md-button>
                     <md-button class="md-raised md-primary" ng-click="vm.navigateToPubList(pubList)">View</md-button>
                 </div>
             </md-card-actions>

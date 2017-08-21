@@ -133,6 +133,7 @@
                     <h4 class="card-updated-date-text"><i class="fa fa-calendar"></i> {{vm.getStringDate(pub.date)}}</h4>
                 </md-card-icon-actions>
                 <div layout="row" class="card-start-button">
+                    <md-button class="md-raised md-warn" ng-click="vm.deletePub(pub)">Delete</md-button>
                     <md-button class="md-raised md-primary" ng-click="vm.goToPub(pub)">View</md-button>
                 </div>
             </md-card-actions>

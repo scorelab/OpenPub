@@ -12,6 +12,7 @@
         vm.researchAreas = [];
         vm.filteredResearchAreas = [];
         vm.publication = null;
+        vm.isEditable = false;
 
         vm.initController = function () {
             $('.loading').removeClass("hidden");
@@ -70,12 +71,11 @@
         function LoadPublication() {
             vm.publication = pubService.findByID($stateParams.pubID);
             vm.publication.$loaded().then(function() {
+                if(vm.user != null && vm.publication.UserID == vm.user.uid){
+                    vm.isEditable = true;
+                }
                 $('.loading').addClass("hidden");
             });
-        }
-
-        function LoadPubLists() {
-            $('.loading').addClass("hidden");
         }
     });
 

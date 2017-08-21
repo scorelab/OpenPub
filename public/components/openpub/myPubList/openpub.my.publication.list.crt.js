@@ -84,6 +84,25 @@
             });
         };
 
+        vm.deletePub = function (pub) {
+            $('.loading').removeClass("hidden");
+            pubService.RemoveElement(pub)
+            .then(function(createdCodelab) {
+                var allPubs = pubService.getAllElements();
+                allPubs.$loaded()
+                .then(function(result) {
+                    vm.pubLoadedFlag = true;
+                    allPubs = result;
+                    vm.pubs = $.grep(allPubs, function(e){ return e.pubListId == vm.currentPubList.$id; })
+                    vm.allPubs = vm.pubs;
+                    $('.loading').addClass("hidden");
+                })
+                .catch(function(error) {
+                    console.log("Error:", error);
+                });
+            });
+        }
+
         function filterUsingSearch() {
             var filteredByName = $.grep(vm.allPubs, function(e){ return e.name.toLowerCase().includes(vm.search.toLowerCase()); });
             vm.pubs = [];

@@ -87,6 +87,25 @@
             }
         };
 
+        vm.deletePubList = function (pubList) {
+            $('.loading').removeClass("hidden");
+            pubListService.RemoveElement(pubList)
+            .then(function(createdCodelab) {
+                vm.filteredPubLists = pubListService.getElementsByUserID(vm.user.uid);
+                var allPubLists = pubListService.getAllElements();
+                allPubLists.$loaded()
+                .then(function(result) {
+                    vm.allPubLists = result;
+                    vm.filteredPubLists = $.grep(vm.allPubLists, function(e){ return e.userID == vm.user.uid; })
+                    FilterResearchAreas();
+                    $('.loading').addClass("hidden");
+                })
+                .catch(function(error) {
+                    console.log("Error:", error);
+                });
+            });
+        }
+
         vm.updatePublic = function (pubList) {
             pubListService.SaveElement(pubList)
             .then(function(saved) {
