@@ -38,6 +38,16 @@
             });
         };
 
+        this.RemoveElement = function (item) {
+            return pubs.$remove(item).then(function(ref) {
+                var removed = false;
+                if(ref.key === item.$id) {
+                    removed = true;
+                }
+                return removed;
+            });
+        };
+
         this.findPubs = function (pubListId) {
             var requestedPubs = [];
             angular.forEach(requestedPubs, function(value, key){
@@ -51,7 +61,7 @@
         this.SaveElement = function (element) {
             pubs[pubs.$indexFor(element.$id)] = element;
             return pubs.$save(pubs.$indexFor(element.$id)).then(function(ref) {
-                if(ref.key === pubs[2].$id){
+                if(ref.key === pubs[pubs.$indexFor(element.$id)].$id){
                     return true;
                 }
             });

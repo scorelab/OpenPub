@@ -33,6 +33,10 @@
             }
         };
 
+        vm.cancelBtnClicked = function () {
+            $location.path('/openpub');
+        }
+
         function authenticateUser(){
             if(vm.user == null){
                 vm.auth.$onAuthStateChanged(function(firebaseUser) {

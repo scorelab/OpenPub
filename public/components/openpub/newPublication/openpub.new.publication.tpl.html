@@ -49,7 +49,10 @@
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Name</label>
-                                <input ng-model="vm.name">
+                                <input name="pubName" ng-model="vm.name" required>
+                                <div ng-messages="newOpenpubForm.pubName.$error">
+                                    <div ng-message="required">This is required.</div>
+                                </div>
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Research Area</label>
@@ -58,6 +61,9 @@
                                         {{ra.Name}}
                                     </md-option>
                                 </md-select>
+                                <div ng-messages="newOpenpubForm.researchArea.$error">
+                                    <div ng-message="required">This is required.</div>
+                                </div>
                             </md-input-container>
 
                         </div>
@@ -76,19 +82,29 @@
                         <md-chips ng-model="vm.authers" name="authers" readonly="vm.readonly"
                                         md-removable="vm.removable" placeholder="Authers">
                         </md-chips>
+                        <p style="color: red;" ng-if="vm.clickedFirstTime && vm.authers.length == 0">This is required.</p>
                         <br/>
                         <md-input-container class="md-block">
                             <label>Description</label>
-                            <textarea ng-model="vm.description" md-maxlength="3000" rows="6" md-select-on-focus></textarea>
+                            <textarea name="description" ng-model="vm.description" md-maxlength="3000" rows="6" md-select-on-focus required></textarea>
+                            <div ng-messages="newOpenpubForm.description.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
                         </md-input-container>
                         <br/>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Publication Link</label>
-                            <input ng-model="vm.url">
+                            <input name="pubLink" ng-model="vm.url" required>
+                            <div ng-messages="newOpenpubForm.pubLink.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Venue</label>
-                            <input ng-model="vm.venue">
+                            <input name="venue" ng-model="vm.venue" required>
+                            <div ng-messages="newOpenpubForm.venue.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
                         </md-input-container>
                         <div layout="row" layout-align="end">
                             <md-button class="md-raised">Cancel</md-button>

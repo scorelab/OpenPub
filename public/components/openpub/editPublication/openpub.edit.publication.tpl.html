@@ -7,6 +7,9 @@
                 <md-button ui-sref="openpub">OpenPub</md-button>
             </span>
             <span flex></span>
+            <span>
+                <md-button ui-sref="openpub">openpub</md-button>
+            </span>
             <div ng-if="!vm.user">
                 <span>
                     <md-button ui-sref="auth">Sign In</md-button>
@@ -29,7 +32,7 @@
             <md-content>
                 <md-toolbar class="md-hue-3">
                     <div class="md-toolbar-tools">
-                        <span>New Publication List</span>
+                        <span>New Publication</span>
                     </div>
                 </md-toolbar>
                 <div layout-margin>
@@ -46,14 +49,14 @@
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Name</label>
-                                <input name="listName" ng-model="vm.listName" required>
-                                <div ng-messages="newOpenpubForm.listName.$error">
+                                <input name="pubName" ng-model="vm.publication.name" required>
+                                <div ng-messages="newOpenpubForm.pubName.$error">
                                     <div ng-message="required">This is required.</div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Research Area</label>
-                                <md-select name="researchArea" ng-model="vm.researchArea" required>
+                                <md-select name="researchArea" ng-model="vm.researchArea" ng-model-options="{trackBy: '$value.$id'}" required>
                                     <md-option ng-repeat="ra in vm.researchAreas" ng-value="{{ra}}">
                                         {{ra.Name}}
                                     </md-option>
@@ -65,26 +68,48 @@
 
                         </div>
 
+                            <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="vm.publication.isPublic" class="md-primary">
+                                publicly visible
+                            </md-checkbox>
+
+                            <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="vm.publication.peerReviewed" class="md-primary">
+                                Peer  Reviewed
+                            </md-checkbox>
                         <br/>
-                        <md-chips ng-model="vm.tags" name="fruitName" readonly="vm.readonly"
+                        <md-chips ng-model="vm.publication.tags" name="tags" readonly="vm.readonly"
                                         md-removable="vm.removable" placeholder="Tags">
                         </md-chips>
+                        <md-chips ng-model="vm.publication.authers" name="authers" readonly="vm.readonly"
+                                        md-removable="vm.removable" placeholder="Authers">
+                        </md-chips>
+                        <p style="color: red;" ng-if="vm.clickedFirstTime && vm.authers.length == 0">This is required.</p>
                         <br/>
                         <md-input-container class="md-block">
                             <label>Description</label>
-                            <textarea name="description" ng-model="vm.listDescription" md-maxlength="500" rows="3" md-select-on-focus required></textarea>
+                            <textarea name="description" ng-model="vm.publication.description" md-maxlength="3000" rows="6" md-select-on-focus required></textarea>
                             <div ng-messages="newOpenpubForm.description.$error">
                                 <div ng-message="required">This is required.</div>
                             </div>
                         </md-input-container>
                         <br/>
-                        <md-checkbox md-no-ink aria-label="Publicly visible" ng-model="vm.isPublic" class="md-primary">
-                            publicly visible
-                        </md-checkbox>
-                        <br/>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Publication Link</label>
+                            <input name="pubLink" ng-model="vm.publication.url" required>
+                            <div ng-messages="newOpenpubForm.pubLink.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Venue</label>
+                            <input name="venue" ng-model="vm.publication.venue" required>
+                            <div ng-messages="newOpenpubForm.venue.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
                         <div layout="row" layout-align="end">
-                            <md-button class="md-raised" ng-click="vm.cancelBtnClicked()">Cancel</md-button>
-                            <md-button class="md-raised md-primary" type="submit" ng-click="vm.CreateElement()">Create New Publication</md-button>
+                            <md-button class="md-raised" ng-click="vm.CancelBtnClicked()">Cancel</md-button>
+                            <md-button class="md-raised md-primary" ng-click="vm.UpdateElement()">Update Publication</md-button>
+                        </div>
                         </div>
                     </form>
                 </div>

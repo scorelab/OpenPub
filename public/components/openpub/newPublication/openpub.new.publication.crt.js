@@ -4,7 +4,7 @@
     
     angular
         .module('openpub')
-        .controller('newPubController', function(auth, $scope, $mdSidenav, $mdDialog, $state, $mdToast, $location, $stateParams, pubService, pubListCategoryService) {
+        .controller('newPubController', function(auth, $scope, $mdSidenav, $mdDialog, $state, $mdToast, $location, $stateParams, pubService, pubListCategoryService, pubListService) {
         
         var vm = this;
         vm.auth = auth.ref;
@@ -25,9 +25,11 @@
         vm.researchArea = null;
         vm.peerReviewed = false;
         vm.venue = "";
+        vm.clickedFirstTime = false;
 
         vm.CreateElement = function () {
-            // if(vm.name != null && vm.description != null && vm.researchArea != null && vm.authers.length != 0 ){
+            vm.clickedFirstTime = true;
+            if(vm.name != null && vm.description != null && vm.researchArea != null && vm.authers.length != 0 && vm.url != null && vm.venue != null){
                 var newPub = pubService.CreateNewObject(vm.name, 
                                                         vm.description, 
                                                         vm.authers, 
@@ -45,7 +47,7 @@
                     newPub = createdPub;
                     $location.path('/pub/' + createdPub.$id);
                 });
-            // }
+            }
         };
 
         function authenticateUser(){
@@ -57,7 +59,10 @@
                         vm.user = firebaseUser;
                         vm.researchAreas = pubListCategoryService.getAllElements();
                         if($stateParams.pubListId == null) {
-                            $location.path('/myPubList')
+                            vm.pubList = pubService.findByID($stateParams.pubListId);
+                            if(vm.pubList.userID != vm.user.uid) {
+                                $location.path('/myPubList');
+                            }
                         }
                     }
                 });

@@ -48,8 +48,13 @@
             });
         };
 
-        this.SaveElement = function () {
-            
+        this.SaveElement = function (element) {
+            pubLists[pubLists.$indexFor(element.$id)] = element;
+            return pubLists.$save(pubLists.$indexFor(element.$id)).then(function(ref) {
+                if(ref.key === pubLists[pubLists.$indexFor(element.$id)].$id){
+                    return true;
+                }
+            });
         };
 
         this.findByID = function (id) {
