@@ -6,7 +6,12 @@ var ip = '127.0.0.1';
 app.set("view engine","ejs");
 
 app.get("/",function(req,res){
-    res.render("home");
+    var publications = [
+        {title: "Machine Learning", author: "David"},
+        {title: "Artificial Intelligence", author: "Tom"},
+        {title: "Algorithm", author: "Lucas"}
+    ]
+    res.render("home",{publications:publications});
 });
 
 app.get("/publication",function(req,res){
