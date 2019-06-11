@@ -18,6 +18,17 @@ app.get("/publication",function(req,res){
     res.render("publication");
 });
 
+app.get("/login",function(req,res){
+    res.render("login");
+});
+
+app.get("/register",function(req,res){
+    res.render("register");
+});
+
+app.get("/profile",function(req,res){
+    res.render("profile");
+});
 
 app.listen(port,ip,function(){
     console.log("Program server has started!");
