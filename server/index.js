@@ -3,7 +3,7 @@ const app = express();
 
 //Route handler for root
 app.get('/', (req,res) => {
-    res.send({hi:'there'});
+    res.send({bye:'buddy'});
 });
 
 //Port setup for heroku
