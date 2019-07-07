@@ -1,6 +1,13 @@
 import React, { Component } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
+import { connect } from 'react-redux';
+
 import "./App.css";
+
+import { history } from './helpers';
+import { routesConstants } from './constants';
+import { alertActions } from './actions';
+import { PrivateRoute } from './components';
 
 import Navigation from './components/Navigation';
 import Admin from './components/Admin';
@@ -12,27 +19,45 @@ import SignOut from './components/SignOut';
 import SignUp from './components/SignUp';
 import Footer from './components/Footer';
 
-import * as ROUTES from './constants/routes';
 
-export default class App extends Component {
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    const { dispatch } = this.props;
+    history.listen((location, action) => {
+      // clear alert on location change
+      dispatch(alertActions.clear());
+    });
+  }
+
   render() {
-    return (
-      <BrowserRouter>
-        <div>
-            <Navigation/>
-            <Switch>
-                <Route path={ROUTES.SIGN_UP} component={SignUp}/>
-                <Route path={ROUTES.SIGN_IN} component={SignIn}/>
-                <Route path={ROUTES.SIGN_OUT} component={SignOut}/>
 
-                <Route path={ROUTES.PASSWORD_CHANGE} component={PasswordChange}/>
-                <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget}/>
-                <Route path={ROUTES.ADMIN} component={Admin}/>
-                <Route path='*' exact={true} component={Page404}/>
-            </Switch>
-            <Footer/>
+    const { alert } = this.props;
+    return (
+        <div>
+          <Navigation />
+          <Router>
+            <Route path={routesConstants.SIGN_UP} component={SignUp} />
+            <Route path={routesConstants.SIGN_IN} component={SignIn} />
+            <Route path={routesConstants.SIGN_OUT} component={SignOut} />
+
+            <Route path={routesConstants.PASSWORD_CHANGE} component={PasswordChange} />
+            <Route path={routesConstants.PASSWORD_FORGET} component={PasswordForget} />
+            <Route path={routesConstants.Admin} component={Admin} />
+            <Route path='*' exact={true} component={Page404} />
+          <Footer />
+          </Router>
         </div>
-    </BrowserRouter>
     );
   }
 }
+
+function mapStateToProps(state) {
+  const { alert } = state;
+  return {
+    alert
+  };
+}
+
+export default connect(mapStateToProps(App));
