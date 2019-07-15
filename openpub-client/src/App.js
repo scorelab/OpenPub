@@ -7,6 +7,8 @@ import Navigation from './components/Navigation';
 import Admin from './components/Admin';
 import About from './components/About';
 import AddPublication from './components/AddPublication';
+import Home from './components/Home';
+import PasswordForget from './components/PasswordForget';
 import Page404 from './components/Page404';
 import Profile from './components/Profile';
 import SignIn from './components/SignIn';
@@ -21,13 +23,14 @@ class App extends Component {
           {/*<Jumbotron />*/}
           <Container>
             <Switch>
-              <Route exact path="/"/>
+              <Route exact path="/" component={Home}/>
               <Route path="/about" component={About}/>
               <Route path="/profile" component={Profile}/>
               <Route path="/admin" component={Admin}/>
               <Route path="/add-publication" component={AddPublication}/>
               <Route path="/signin" component={SignIn}/>
               <Route path="/signup" component={SignUp}/>
+              <Route path="/forgot-password" component={PasswordForget}/>
               <Route component={Page404} />
             </Switch>
           </Container>
