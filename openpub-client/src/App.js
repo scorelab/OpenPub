@@ -1,38 +1,43 @@
 import React, { Component } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+import { Container } from 'react-bootstrap';
 
 import Navigation from './components/Navigation';
 import Admin from './components/Admin';
-import Page404 from './components/Page404';
-import PasswordChange from './components/PasswordChange';
+import About from './components/About';
+import AddPublication from './components/AddPublication';
+import Home from './components/Home';
 import PasswordForget from './components/PasswordForget';
+import Page404 from './components/Page404';
+import Profile from './components/Profile';
 import SignIn from './components/SignIn';
-import SignOut from './components/SignOut';
 import SignUp from './components/SignUp';
-import Footer from './components/Footer';
 
-import * as ROUTES from './constants/routes';
-
-export default class App extends Component {
+class App extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <div>
-            <Navigation/>
+      <React.Fragment>
+        <Router>
+          <Navigation />
+          {/*<Jumbotron />*/}
+          <Container>
             <Switch>
-                <Route path={ROUTES.SIGN_UP} component={SignUp}/>
-                <Route path={ROUTES.SIGN_IN} component={SignIn}/>
-                <Route path={ROUTES.SIGN_OUT} component={SignOut}/>
-
-                <Route path={ROUTES.PASSWORD_CHANGE} component={PasswordChange}/>
-                <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget}/>
-                <Route path={ROUTES.ADMIN} component={Admin}/>
-                <Route path='*' exact={true} component={Page404}/>
+              <Route exact path="/" component={Home}/>
+              <Route path="/about" component={About}/>
+              <Route path="/profile" component={Profile}/>
+              <Route path="/admin" component={Admin}/>
+              <Route path="/add-publication" component={AddPublication}/>
+              <Route path="/signin" component={SignIn}/>
+              <Route path="/signup" component={SignUp}/>
+              <Route path="/forgot-password" component={PasswordForget}/>
+              <Route component={Page404} />
             </Switch>
-            <Footer/>
-        </div>
-    </BrowserRouter>
+          </Container>
+        </Router>
+      </React.Fragment>
     );
   }
 }
+
+export default App;
