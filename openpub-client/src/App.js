@@ -1,22 +1,33 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
-
 import Navigation from './components/Navigation';
 import Admin from './components/Admin';
 import Page404 from './components/Page404';
 import PasswordChange from './components/PasswordChange';
 import PasswordForget from './components/PasswordForget';
-import SignIn from './components/SignIn';
-import SignOut from './components/SignOut';
+import SignIn from './components/signin';
+import SignOut from './components/signout';
 import SignUp from './components/SignUp';
 import Footer from './components/Footer';
 
+// Redux
+import { Provider } from 'react-redux';
+import store from './store';
+import { loadUser } from './actions/auth';
+
+
 import * as ROUTES from './constants/routes';
 
-export default class App extends Component {
+class App extends Component {
+  componentDidMount() {
+    store.dispatch(loadUser());
+    console.log('jj');
+    
+  }
   render() {
     return (
+      <Provider store={store}>
       <BrowserRouter>
         <div>
             <Navigation/>
@@ -33,6 +44,8 @@ export default class App extends Component {
             <Footer/>
         </div>
     </BrowserRouter>
+    </Provider>
     );
   }
 }
+export default App;
